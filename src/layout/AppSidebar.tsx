@@ -34,14 +34,14 @@ const navItems: NavItem[] = [
     //subItems: [{ name: "Ecommerce", path: "/", pro: false }],
   },
   {
-    icon: <CalenderIcon />,
-    name: "Tareas",
-    path: "/tasks",
-  },
-  {
     icon: <UserCircleIcon />,
     name: "Workflows",
     path: "/workflows",
+  },
+  {
+    icon: <CalenderIcon />,
+    name: "Tareas",
+    path: "/tasks",
   },
   {
     name: "Tu Cartera",
