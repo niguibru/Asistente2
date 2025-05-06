@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router";
 // Assume these icons are imported from an icon library
 import {
   //BoxCubeIcon,
-  BotIcon,
+  RobotIcon,
   CalenderIcon,
   ChevronDownIcon,
   HorizontaLDots,
@@ -13,7 +13,9 @@ import {
   //PieChartIcon,
   //PlugInIcon,
   //TableIcon,
-  UserCircleIcon,
+  WFIcon,
+  TasksIcon,
+  PortfolioIcon
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 //import SidebarWidget from "./SidebarWidget";
@@ -27,24 +29,24 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    icon: <BotIcon />,
+    icon: <RobotIcon />,
     name: "Copilot",
     path: "/", //this is Home.tsx
     //subItems: [{ name: "Ecommerce", path: "/", pro: false }],
   },
   {
-    icon: <UserCircleIcon />,
+    icon: <WFIcon />,
     name: "Workflows",
     path: "/workflows",
   },
   {
-    icon: <CalenderIcon />,
+    icon: <TasksIcon />,
     name: "Tareas",
     path: "/tasks",
   },
   {
     name: "Tu Cartera",
-    icon: <ListIcon />,
+    icon: <PortfolioIcon />,
     path: "/your-portfolio",
   },
   /*  {
@@ -361,7 +363,8 @@ const AppSidebar: React.FC = () => {
                 }`}
               >
                 {isExpanded || isHovered || isMobileOpen ? (
-                  "Others"
+                  // "Others"
+                  <></>
                 ) : (
                   <HorizontaLDots />
                 )}

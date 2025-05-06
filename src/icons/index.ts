@@ -53,6 +53,12 @@ import { ReactComponent as MoreDotIcon } from "./moredot.svg?react";
 import { ReactComponent as AlertHexaIcon } from "./alert-hexa.svg?react";
 import { ReactComponent as ErrorHexaIcon } from "./info-hexa.svg?react";
 import { ReactComponent as BotIcon } from "./bot.svg?react";
+import { ReactComponent as RobotIcon } from "./robot.svg?react";
+import { ReactComponent as WFIcon } from "./diagram-project-solid.svg?react";
+import { ReactComponent as TasksIcon } from "./list-check-solid.svg?react";
+import { ReactComponent as PortfolioIcon } from "./suitcase-solid.svg?react";
+
+
 
 export {
   ErrorHexaIcon,
@@ -109,5 +115,9 @@ export {
   HorizontaLDots,
   ChevronUpIcon,
   ChatIcon,
-  BotIcon
+  BotIcon,
+  RobotIcon,
+  WFIcon,
+  TasksIcon,
+  PortfolioIcon
 };

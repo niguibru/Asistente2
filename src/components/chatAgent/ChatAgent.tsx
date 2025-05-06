@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
+import '@n8n/chat/style.css';
+import { createChat } from '@n8n/chat';
 
 interface Message {
   text: string;
@@ -6,6 +9,15 @@ interface Message {
 }
 
 export default function ChatAgent() {
+
+  useEffect(() => {
+		createChat({
+			webhookUrl: 'YOUR_PRODUCTION_WEBHOOK_URL'
+		});
+	}, []);
+
+	//return (<div></div>);
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
 
