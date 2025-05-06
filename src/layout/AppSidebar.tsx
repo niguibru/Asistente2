@@ -5,14 +5,8 @@ import { Link, useLocation } from "react-router";
 import {
   //BoxCubeIcon,
   RobotIcon,
-  CalenderIcon,
   ChevronDownIcon,
   HorizontaLDots,
-  ListIcon,
-  //PageIcon,
-  //PieChartIcon,
-  //PlugInIcon,
-  //TableIcon,
   WFIcon,
   TasksIcon,
   PortfolioIcon
