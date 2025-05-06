@@ -7,7 +7,6 @@ import {
   BotIcon,
   CalenderIcon,
   ChevronDownIcon,
-  GridIcon,
   HorizontaLDots,
   ListIcon,
   //PageIcon,
