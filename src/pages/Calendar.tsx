@@ -118,10 +118,18 @@ const Calendar: React.FC = () => {
   return (
     <>
       <PageMeta
-        title="React.js Calendar Dashboard | TailAdmin - Next.js Admin Dashboard Template"
-        description="This is React.js Calendar Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template"
+        title="Zinco Copilot"
+        description=""
       />
       <div className="rounded-2xl border  border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
+      <div
+          className="absolute inset-0 flex items-center justify-center z-50 bg-gray-10 bg-opacity-30 pointer-events-auto"
+          aria-hidden="true" // Para accesibilidad, ya que es decorativo y bloquea
+        >
+          <span className="text-red-600 text-5xl sm:text-6xl font-bold opacity-75 transform -rotate-21 select-none">
+            Work in Progress
+          </span>
+        </div>
         <div className="custom-calendar">
           <FullCalendar
             ref={calendarRef}
@@ -139,7 +147,7 @@ const Calendar: React.FC = () => {
             eventContent={renderEventContent}
             customButtons={{
               addEventButton: {
-                text: "Add Event +",
+                text: "Agregar Evento +",
                 click: openModal,
               },
             }}

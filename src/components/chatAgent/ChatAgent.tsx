@@ -12,7 +12,7 @@ export default function ChatAgent() {
 
   useEffect(() => {
 		createChat({
-			webhookUrl: 'YOUR_PRODUCTION_WEBHOOK_URL'
+			webhookUrl: 'https://zinco.app.n8n.cloud/webhook/01de331e-b178-4aa3-82e7-b64fae4d247e/chat'
 		});
 	}, []);
 
