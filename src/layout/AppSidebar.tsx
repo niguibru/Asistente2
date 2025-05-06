@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router";
 // Assume these icons are imported from an icon library
 import {
   //BoxCubeIcon,
+  BotIcon,
   CalenderIcon,
   ChevronDownIcon,
   GridIcon,
@@ -27,7 +28,7 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    icon: <GridIcon />,
+    icon: <BotIcon />,
     name: "Copilot",
     path: "/", //this is Home.tsx
     //subItems: [{ name: "Ecommerce", path: "/", pro: false }],

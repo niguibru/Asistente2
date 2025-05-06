@@ -1,4 +1,4 @@
-import EcommerceMetrics from "../../components/ecommerce/EcommerceMetrics";
+import SuggestedPrompts from "../../components/chatAgent/SuggestedPrompts";
 //import RecentOrders from "../../components/ecommerce/RecentOrders";
 import PageMeta from "../../components/common/PageMeta";
 import ChatAgent from "../../components/chatAgent/ChatAgent";
@@ -17,7 +17,7 @@ export default function Home() {
         </div>
 
         <div className="col-span-12 xl:col-span-5">
-          <EcommerceMetrics />
+          <SuggestedPrompts />
         </div>
 
         {/* <div className="col-span-12 xl:col-span-5">
