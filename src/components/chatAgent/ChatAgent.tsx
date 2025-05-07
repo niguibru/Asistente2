@@ -11,7 +11,7 @@ export default function ChatAgent() {
       mode: 'fullscreen', 
       target: '#n8n-chat5',
       initialMessages: [
-        `Estoy aquí para ayudarte con dudas contables, fiscales o laborales. Estoy conectado con fuentes oficiales como el Banco de España, la Agencia Tributaria, la Seguridad Social y el BOE, para darte respuestas precisas, actualizadas y con respaldo normativo.\n\n Ejemplos de preguntas que puedes hacerme:\n\n • ¿Cómo se contabiliza una subvención?\n\n • ¿Qué retención aplico en una factura a un autónomo?\n\n • ¿Qué modelo debo presentar para declarar el IVA?\n\n • ¿Cómo calculo el finiquito de un trabajador?\n\n`
+        `Estoy aquí para ayudarte con dudas contables, fiscales o laborales.\n\n Estoy conectado con fuentes oficiales como el Banco de España, la Agencia Tributaria, la Seguridad Social y el BOE, para darte respuestas precisas, actualizadas y con respaldo normativo.\n\n Ejemplos de preguntas que puedes hacerme:\n\n • ¿Cómo se contabiliza una subvención?\n\n • ¿Qué retención aplico en una factura a un autónomo?\n\n • ¿Qué modelo debo presentar para declarar el IVA?\n\n • ¿Cómo calculo el finiquito de un trabajador?\n\n`
       ],
 		});
 	}, []);
