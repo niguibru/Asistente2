@@ -62,7 +62,7 @@ export default function WorkFlows() { // Asumiendo que el nombre del componente 
 
 
   return (
-    <div className="p-4 sm:p-6 md:p-8 bg-gray-100 dark:bg-gray-900 min-h-screen">
+    <div className="p-4 sm:p-6 md:p-8 min-h-screen">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 md:gap-6">
         <InfoCard
           icon={<HandShakeIcon />}
