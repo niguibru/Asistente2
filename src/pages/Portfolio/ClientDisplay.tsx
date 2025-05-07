@@ -147,26 +147,6 @@ const ClientDisplay: React.FC = () => {
         }
     };
 
-    // Datos mock de ventas
-    const salesData = {
-        labels: [
-            'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
-            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
-        ],
-        datasets: [
-            {
-                label: 'Ventas ($)',
-                data: [
-                    1200, 1500, 1100, 1800, 2000, 1700,
-                    2100, 1900, 2200, 2500, 2300, 2400
-                ],
-                backgroundColor: '#a084e8',
-                borderRadius: 6,
-                maxBarThickness: 32
-            }
-        ]
-    };
-
     const salesOptions = {
         responsive: true,
         plugins: {
@@ -175,9 +155,16 @@ const ClientDisplay: React.FC = () => {
             },
             title: {
                 display: true,
-                text: 'Ventas del último año',
+                text: 'Ventas (€)',
                 color: '#6c47b6',
                 font: { size: 18, weight: 700 }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context: any) {
+                        return (context.parsed.y / 1000).toFixed(1) + 'k €';
+                    }
+                }
             }
         },
         scales: {
@@ -187,7 +174,12 @@ const ClientDisplay: React.FC = () => {
             },
             y: {
                 grid: { color: '#eee' },
-                ticks: { color: '#888' }
+                ticks: {
+                    color: '#888',
+                    callback: function(value: number) {
+                        return (value / 1000).toFixed(1) + 'k €';
+                    }
+                }
             }
         }
     };
@@ -293,20 +285,64 @@ const ClientDisplay: React.FC = () => {
                             {/* Columna 1: Ventas */}
                             <div style={{ flex: 1, height: '300px', background: '#fafaff', borderRadius: 10, boxShadow: '0 1px 4px #0001', padding: 24, border: '1.5px solid #e0e0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Bar
-                                    data={salesData}
+                                    data={{
+                                        labels: [
+                                            'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                                            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+                                        ],
+                                        datasets: [
+                                            {
+                                                label: 'Ventas (€)',
+                                                data: [
+                                                    1200, 1500, 1100, 1800, 2000, 1700,
+                                                    2100, 1900, 2200, 2500, 2300, 2400
+                                                ],
+                                                backgroundColor: '#847AD5',
+                                                borderRadius: 6,
+                                                maxBarThickness: 32
+                                            }
+                                        ]
+                                    }}
                                     options={{
-                                        ...salesOptions,
+                                        responsive: true,
+                                        scales: {
+                                            x: {
+                                                grid: { display: false },
+                                                ticks: { color: '#666' }
+                                            },
+                                            y: {
+                                                grid: { color: '#e5e5e5' },
+                                                ticks: {
+                                                    color: '#666',
+                                                    callback: function(tickValue: string | number) {
+                                                        if (typeof tickValue === 'number') {
+                                                            return (tickValue / 1000).toFixed(1) + 'k €';
+                                                        }
+                                                        return tickValue;
+                                                    }
+                                                }
+                                            }
+                                        },
                                         plugins: {
-                                            ...salesOptions.plugins,
+                                            legend: { display: false },
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(context: any) {
+                                                        return (context.parsed.y / 1000).toFixed(1) + 'k €';
+                                                    }
+                                                }
+                                            },
                                             title: {
-                                                ...salesOptions.plugins.title,
-                                                text: 'Ventas'
+                                                display: true,
+                                                text: 'Ventas (€)',
+                                                color: '#6c47b6',
+                                                font: { size: 18, weight: 700 }
                                             }
                                         }
                                     }}
                                 />
                             </div>
-                            {/* Columna 2: Ingresos */}
+                            {/* Columna 2: EBITDA */}
                             <div style={{ flex: 1, height: '300px', background: '#fafaff', borderRadius: 10, boxShadow: '0 1px 4px #0001', padding: 24, border: '1.5px solid #e0e0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Bar
                                     data={{
@@ -316,10 +352,10 @@ const ClientDisplay: React.FC = () => {
                                         ],
                                         datasets: [
                                             {
-                                                label: 'Ingresos ($)',
+                                                label: 'EBITDA (€)',
                                                 data: [
-                                                    800, 1200, 900, 1500, 1700, 1400,
-                                                    1800, 1600, 2000, 2100, 1950, 2050
+                                                    400, 600, 500, 900, 1100, 950,
+                                                    1200, 1100, 1300, 1400, 1350, 1450
                                                 ],
                                                 backgroundColor: '#847AD5',
                                                 borderRadius: 6,
@@ -328,12 +364,45 @@ const ClientDisplay: React.FC = () => {
                                         ]
                                     }}
                                     options={{
-                                        ...salesOptions,
+                                        responsive: true,
+                                        scales: {
+                                            x: {
+                                                grid: {
+                                                    display: false
+                                                },
+                                                ticks: {
+                                                    color: '#666'
+                                                }
+                                            },
+                                            y: {
+                                                grid: {
+                                                    color: '#e5e5e5'
+                                                },
+                                                ticks: {
+                                                    color: '#666',
+                                                    callback: function(tickValue: string | number) {
+                                                        if (typeof tickValue === 'number') {
+                                                            return (tickValue / 1000).toFixed(1) + 'k €';
+                                                        }
+                                                        return tickValue;
+                                                    }
+                                                }
+                                            }
+                                        },
                                         plugins: {
-                                            ...salesOptions.plugins,
+                                            legend: {
+                                                display: false
+                                            },
+                                            tooltip: {
+                                                callbacks: {
+                                                    label: function(context: any) {
+                                                        return (context.parsed.y / 1000).toFixed(1) + 'k €';
+                                                    }
+                                                }
+                                            },
                                             title: {
                                                 ...salesOptions.plugins.title,
-                                                text: 'Ingresos'
+                                                text: 'EBITDA (€)'
                                             }
                                         }
                                     }}
