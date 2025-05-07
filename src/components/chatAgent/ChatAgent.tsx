@@ -28,7 +28,7 @@ export default function ChatAgent() {
               className="w-36 h-36 rounded-full mr-4"
             />
             <p className="text-2xl font-semibold">
-              Hola, soy Zinco Co-Pilot. <br />
+              Hola, soy Zinco Copilot. <br />
               ¿Cómo puedo ayudarte hoy?
             </p>
           </div>
