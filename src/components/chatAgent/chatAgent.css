@@ -1,3 +1,18 @@
 .chat-layout .chat-header {
     display: none;
 }
+
+.chat-layout .chat-body {
+    background: transparent
+}
+
+.chat-message.chat-message-from-bot:not(.chat-message-transparent) {
+    /* background: #3CE476; */
+    background: transparent;
+    border-radius: 12px;
+}
+
+.chat-message.chat-message-from-user:not(.chat-message-transparent) {    
+    background: #847AD5;
+    border-radius: 12px;
+}

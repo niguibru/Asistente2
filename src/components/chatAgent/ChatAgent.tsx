@@ -44,31 +44,25 @@ export default function ChatAgent() {
     }
   };
 
-
-
   return (
-    <div className="rounded-2xl border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-white/[0.03] h-full">
-      <div className="px-5 pt-5 bg-white shadow-default rounded-2xl pb-11 dark:bg-gray-900 sm:px-6 sm:pt-6 h-full">
-        <div className="p-4 flex-shrink-0 ">
+    <div className="rounded-2xl border border-gray-200 bg-gray-100 dark:border-gray-800 dark:bg-white/[0.03] h-[700px] flex flex-col">
+      <div className="px-5 pt-5 bg-white shadow-default rounded-2xl pb-11 dark:bg-gray-900 sm:px-6 sm:pt-6 flex flex-col h-full">
+        <div className="p-4 flex-shrink-0">
           <div className="flex items-center">
             <img
-              src="/images/chat/AvatarChatAgent.jpeg" // Asegúrate de que este content_id sigue siendo válido o reemplázalo
+              src="/images/chat/AvatarChatAgent.jpeg"
               alt="Avatar del agente virtual"
               className="w-36 h-36 rounded-full mr-4"
             />
             <p className="text-lg font-semibold">¿Cómo puedo ayudarte hoy?</p>
           </div>
         </div>
-       
-        
-        
-        <div className="p-4 h-full w-full" id="n8n-chat5">
-                  
+
+        <div className="p-4 h-full w-full flex-1 overflow-hidden" id="n8n-chat5">
+          {/* Chat embed acá */}
         </div>
-       
       </div>
-
-
     </div>
   );
+  
 }
