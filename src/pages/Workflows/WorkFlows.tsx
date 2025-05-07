@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import InfoCard from './InfoCard'; // Asegúrate de que la ruta sea correcta
 import FullScreenForm from './FullScreenForm';
+import './WorkFlows.css'
 
 // Ejemplo de un icono SVG que podrías pasar como prop
 
