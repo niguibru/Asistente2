@@ -1,5 +1,6 @@
-// src/pages/Workflows/WorkFlows copy.tsx
+import { useState } from 'react';
 import InfoCard from './InfoCard'; // Asegúrate de que la ruta sea correcta
+import FullScreenForm from './FullScreenForm';
 
 // Ejemplo de un icono SVG que podrías pasar como prop
 
@@ -9,7 +10,7 @@ const BellIcon = ({ className = "w-10 h-10 text-blue-500" }: { className?: strin
   </svg>
 );
 
-const MailIcon = ({ className = "w-10 h-10 text-blue-400" }: { className?: string }) => ( // Añadido tipo para props
+const MailIcon = ({ className = "w-10 h-10 text-blue-500" }: { className?: string }) => ( // Añadido tipo para props
   <svg className={className} fill="currentColor" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3.0415 7.06206V14.375C3.0415 14.6511 3.26536 14.875 3.5415 14.875H16.4582C16.7343 14.875 16.9582 14.6511 16.9582 14.375V7.06245L11.1441 11.1168C10.4568 11.5961 9.54348 11.5961 8.85614 11.1168L3.0415 7.06206ZM16.9582 5.19262C16.9582 5.19341 16.9582 5.1942 16.9582 5.19498V5.20026C16.957 5.22216 16.9458 5.24239 16.9277 5.25501L10.2861 9.88638C10.1143 10.0062 9.88596 10.0062 9.71412 9.88638L3.0723 5.25485C3.05318 5.24151 3.04178 5.21967 3.04177 5.19636C3.04176 5.15695 3.0737 5.125 3.1131 5.125H16.8869C16.925 5.125 16.9562 5.15494 16.9582 5.19262ZM18.4582 5.21428V14.375C18.4582 15.4796 17.5627 16.375 16.4582 16.375H3.5415C2.43693 16.375 1.5415 15.4796 1.5415 14.375V5.19498C1.5415 5.1852 1.54169 5.17546 1.54206 5.16577C1.55834 4.31209 2.25546 3.625 3.1131 3.625H16.8869C17.7546 3.625 18.4582 4.32843 18.4583 5.19622C18.4583 5.20225 18.4582 5.20826 18.4582 5.21428Z"></path>
   </svg>
@@ -30,12 +31,34 @@ const HandShakeIcon = ({ className = "w-10 h-10 text-blue-500" }: { className?: 
 
 //<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M0 64C0 28.7 28.7 0 64 0L224 0l0 128c0 17.7 14.3 32 32 32l128 0 0 128-168 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l168 0 0 112c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 64zM384 336l0-48 110.1 0-39-39c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l80 80c9.4 9.4 9.4 24.6 0 33.9l-80 80c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l39-39L384 336zm0-208l-128 0L256 0 384 128z"/></svg>
 
-export default function WorkFlowsCopy() { // Asumiendo que el nombre del componente es WorkFlowsCopy basado en el nombre del archivo
-  // Corrección: Especificar el tipo del parámetro cardTitle como 'string'
-  const handleCardClick = (cardTitle: string) => {
-    alert(`Botón de '${cardTitle}' clickeado!`);
-    // Aquí puedes añadir lógica de navegación o cualquier otra acción.
+export default function WorkFlows() { // Asumiendo que el nombre del componente es WorkFlowsCopy basado en el nombre del archivo
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [selectedCardTitle, setSelectedCardTitle] = useState<string | null>(null);
+
+  const handleOpenForm = (cardTitle: string) => {
+    setSelectedCardTitle(cardTitle);
+    setIsFormOpen(true);
   };
+
+  const handleCloseForm = () => {
+    setIsFormOpen(false);
+    setSelectedCardTitle(null);
+  };
+
+  const handleMinimizeForm = () => {
+    // Por ahora, "minimizar" simplemente cerrará el formulario.
+    // Podrías implementar una lógica diferente si "minimizar" significa otra cosa (ej. ocultar temporalmente).
+    setIsFormOpen(false);
+    console.log("Formulario minimizado (acción actual: cerrar)");
+  };
+
+  const handleSubmitForm = (formData: { [key: string]: string }) => {
+    console.log(`Formulario enviado desde: ${selectedCardTitle}`, formData);
+    // Aquí procesarías los datos del formulario
+    setIsFormOpen(false); // Cierra el formulario después de enviar
+    setSelectedCardTitle(null);
+  };
+
 
   return (
     <div className="p-4 sm:p-6 md:p-8 bg-gray-100 dark:bg-gray-900 min-h-screen">
@@ -45,28 +68,36 @@ export default function WorkFlowsCopy() { // Asumiendo que el nombre del compone
           title="Onboarding de Cliente"
           description="Seleccione el tipo de cliente y le enviaremos un formulario para que lo rellene. Te avisaremos en cuanto lo haya completado."
           buttonText="Iniciar"
-          onButtonClick={() => handleCardClick("Gestión de Usuarios")}
+          onButtonClick={() => handleOpenForm("Onboarding de Cliente")}
         />
         <InfoCard
           icon={<BellIcon />}
           title="Pedido de Documentos"
           description="Elige el documento que deseas solicitar y se enviará una petición al cliente. Serás notificado en cuanto lo envíe."
           buttonText="Iniciar"
-          onButtonClick={() => handleCardClick("Notificaciones")}
+          onButtonClick={() => handleOpenForm("Pedido de Documentos")}
         />
         <InfoCard
-          icon={<DataExtractIcon/>}
+          icon={<DataExtractIcon />}
           title="Extracción de Datos"
           description="Carga un documento y el sistema identificará y extraerá automáticamente la información más relevante. Recibirás un resumen una vez finalizado el proceso."
           buttonText="Iniciar"
-          onButtonClick={() => handleCardClick("Configuración General")}
+          onButtonClick={() => handleOpenForm("Extracción de Datos")}
         />
         <InfoCard
           icon={<MailIcon />}
           title="Borrador de Email"
           description="Crea un borrador de email personalizado, adjunta los archivos necesarios y prepáralo para su envío al cliente."
           buttonText="Iniciar"
-          onButtonClick={() => handleCardClick("Configuración General")}
+          onButtonClick={() => handleOpenForm("Borrador de Email")}
+        />
+
+        <FullScreenForm
+          isOpen={isFormOpen}
+          onClose={handleCloseForm}
+          onMinimize={handleMinimizeForm}
+          onSubmit={handleSubmitForm}
+          formTitle={selectedCardTitle || "Formulario Interactivo"} // Pasa un título por defecto si no hay uno seleccionado
         />
 
       </div>
