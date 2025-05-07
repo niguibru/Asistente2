@@ -783,10 +783,6 @@ span.flatpickr-weekday,
   }
  }
 
- .chat-layout .chat-header {
-  display: none;
- }
-
  :root {
 	--chat--color-primary: #e74266;
 	--chat--color-primary-shade-50: #db4061;
@@ -810,7 +806,6 @@ span.flatpickr-weekday,
 	--chat--window--height: 600px;
 
 	--chat--header-height: auto;
-  --chat--header-display: none;
 	--chat--header--padding: var(--chat--spacing);
 	--chat--header--background: var(--chat--color-dark);
 	--chat--header--color: var(--chat--color-light);

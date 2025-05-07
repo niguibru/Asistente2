@@ -9,9 +9,9 @@ const CustomUserIcon = ({ className = "w-10 h-10 text-blue-500" }: { className?:
 );
 
 const BellIcon = ({ className = "w-10 h-10 text-red-500" }: { className?: string }) => ( // Añadido tipo para props
-    <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-    </svg>
+  <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+  </svg>
 );
 
 
@@ -24,28 +24,34 @@ export default function WorkFlowsCopy() { // Asumiendo que el nombre del compone
 
   return (
     <div className="p-4 sm:p-6 md:p-8 bg-gray-100 dark:bg-gray-900 min-h-screen">
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2 md:gap-6">
         <InfoCard
           icon={<CustomUserIcon />}
           title="Onboarding de Cliente"
           description="Seleccione el tipo de cliente y le enviaremos un formulario para que lo rellene. Te avisaremos en cuanto lo haya completado."
-          buttonText="Ir a Usuarios"
+          buttonText="Iniciar"
           onButtonClick={() => handleCardClick("Gestión de Usuarios")}
         />
         <InfoCard
           icon={<BellIcon />}
-          title="Notificaciones"
-          description="Configura y revisa las notificaciones del sistema para mantenerte informado sobre eventos importantes."
-          buttonText="Ver Alertas"
+          title="Pedido de Documentos"
+          description="Elige el documento que deseas solicitar y se enviará una petición al cliente. Serás notificado en cuanto lo envíe."
+          buttonText="Iniciar"
           onButtonClick={() => handleCardClick("Notificaciones")}
         />
         <InfoCard
-          title="Configuración General"
-          description="Ajusta las configuraciones globales de la plataforma, como el tema, idioma y preferencias."
-          buttonText="Ajustes"
+          title="Extracción de Datos"
+          description="Carga un documento y el sistema identificará y extraerá automáticamente la información más relevante. Recibirás un resumen una vez finalizado el proceso."
+          buttonText="Iniciar"
           onButtonClick={() => handleCardClick("Configuración General")}
         />
-        
+        <InfoCard
+          title="Borrador de Email"
+          description="Crea un borrador de email personalizado, adjunta los archivos necesarios y prepáralo para su envío al cliente."
+          buttonText="Iniciar"
+          onButtonClick={() => handleCardClick("Configuración General")}
+        />
+
       </div>
     </div>
   );

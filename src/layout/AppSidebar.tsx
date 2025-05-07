@@ -18,7 +18,8 @@ type NavItem = {
   name: string;
   icon: React.ReactNode;
   path?: string;
-  subItems?: { name: string; path: string; pro?: boolean; new?: boolean }[];
+  subItems?: { name: string; path: string; pro?: boolean; new?: boolean, disabled?: boolean }[];
+  disabled?: boolean; // Nueva propiedad para deshabilitar
 };
 
 const navItems: NavItem[] = [
@@ -35,8 +36,9 @@ const navItems: NavItem[] = [
   },
   {
     icon: <TasksIcon />,
-    name: "Tareas",
+    name: "Tareas - WIP",
     path: "/tasks",
+    disabled: true, // Este ítem estará deshabilitado
   },
   {
     name: "Tu Cartera",
@@ -158,34 +160,162 @@ const AppSidebar: React.FC = () => {
     });
   };
 
+  // const renderMenuItems = (items: NavItem[], menuType: "main" | "others") => (
+  //   <ul className="flex flex-col gap-4">
+  //     {items.map((nav, index) => (
+  //       <li key={nav.name}>
+  //         {nav.subItems ? (
+  //           <button
+  //             onClick={() => handleSubmenuToggle(index, menuType)}
+  //             className={`menu-item group ${
+  //               openSubmenu?.type === menuType && openSubmenu?.index === index
+  //                 ? "menu-item-active"
+  //                 : "menu-item-inactive"
+  //             } cursor-pointer ${
+  //               !isExpanded && !isHovered
+  //                 ? "lg:justify-center"
+  //                 : "lg:justify-start"
+  //             }`}
+  //           >
+  //             <span
+  //               className={`menu-item-icon-size  ${
+  //                 openSubmenu?.type === menuType && openSubmenu?.index === index
+  //                   ? "menu-item-icon-active"
+  //                   : "menu-item-icon-inactive"
+  //               }`}
+  //             >
+  //               {nav.icon}
+  //             </span>
+  //             {(isExpanded || isHovered || isMobileOpen) && (
+  //               <span className="menu-item-text">{nav.name}</span>
+  //             )}
+  //             {(isExpanded || isHovered || isMobileOpen) && (
+  //               <ChevronDownIcon
+  //                 className={`ml-auto w-5 h-5 transition-transform duration-200 ${
+  //                   openSubmenu?.type === menuType &&
+  //                   openSubmenu?.index === index
+  //                     ? "rotate-180 text-brand-500"
+  //                     : ""
+  //                 }`}
+  //               />
+  //             )}
+  //           </button>
+  //         ) : (
+  //           nav.path && (
+  //             <Link
+  //               to={nav.path}
+  //               className={`menu-item group ${
+  //                 isActive(nav.path) ? "menu-item-active" : "menu-item-inactive"
+  //               }`}
+  //             >
+  //               <span
+  //                 className={`menu-item-icon-size ${
+  //                   isActive(nav.path)
+  //                     ? "menu-item-icon-active"
+  //                     : "menu-item-icon-inactive"
+  //                 }`}
+  //               >
+  //                 {nav.icon}
+  //               </span>
+  //               {(isExpanded || isHovered || isMobileOpen) && (
+  //                 <span className="menu-item-text">{nav.name}</span>
+  //               )}
+  //             </Link>
+  //           )
+  //         )}
+  //         {nav.subItems && (isExpanded || isHovered || isMobileOpen) && (
+  //           <div
+  //             ref={(el) => {
+  //               subMenuRefs.current[`${menuType}-${index}`] = el;
+  //             }}
+  //             className="overflow-hidden transition-all duration-300"
+  //             style={{
+  //               height:
+  //                 openSubmenu?.type === menuType && openSubmenu?.index === index
+  //                   ? `${subMenuHeight[`${menuType}-${index}`]}px`
+  //                   : "0px",
+  //             }}
+  //           >
+  //             <ul className="mt-2 space-y-1 ml-9">
+  //               {nav.subItems.map((subItem) => (
+  //                 <li key={subItem.name}>
+  //                   <Link
+  //                     to={subItem.path}
+  //                     className={`menu-dropdown-item ${
+  //                       isActive(subItem.path)
+  //                         ? "menu-dropdown-item-active"
+  //                         : "menu-dropdown-item-inactive"
+  //                     }`}
+  //                   >
+  //                     {subItem.name}
+  //                     <span className="flex items-center gap-1 ml-auto">
+  //                       {subItem.new && (
+  //                         <span
+  //                           className={`ml-auto ${
+  //                             isActive(subItem.path)
+  //                               ? "menu-dropdown-badge-active"
+  //                               : "menu-dropdown-badge-inactive"
+  //                           } menu-dropdown-badge`}
+  //                         >
+  //                           new
+  //                         </span>
+  //                       )}
+  //                       {subItem.pro && (
+  //                         <span
+  //                           className={`ml-auto ${
+  //                             isActive(subItem.path)
+  //                               ? "menu-dropdown-badge-active"
+  //                               : "menu-dropdown-badge-inactive"
+  //                           } menu-dropdown-badge`}
+  //                         >
+  //                           pro
+  //                         </span>
+  //                       )}
+  //                     </span>
+  //                   </Link>
+  //                 </li>
+  //               ))}
+  //             </ul>
+  //           </div>
+  //         )}
+  //       </li>
+  //     ))}
+  //   </ul>
+  // );
+
   const renderMenuItems = (items: NavItem[], menuType: "main" | "others") => (
     <ul className="flex flex-col gap-4">
       {items.map((nav, index) => (
         <li key={nav.name}>
           {nav.subItems ? (
             <button
-              onClick={() => handleSubmenuToggle(index, menuType)}
+              onClick={() => {
+                if (!nav.disabled) { // Solo permitir toggle si no está deshabilitado
+                  handleSubmenuToggle(index, menuType);
+                }
+              }}
+              disabled={nav.disabled} // Añadir el atributo disabled al botón
               className={`menu-item group ${
                 openSubmenu?.type === menuType && openSubmenu?.index === index
                   ? "menu-item-active"
                   : "menu-item-inactive"
-              } cursor-pointer ${
+              } ${nav.disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} ${ // Estilos para deshabilitado
                 !isExpanded && !isHovered
                   ? "lg:justify-center"
                   : "lg:justify-start"
               }`}
             >
               <span
-                className={`menu-item-icon-size  ${
+                className={`menu-item-icon-size ${
                   openSubmenu?.type === menuType && openSubmenu?.index === index
                     ? "menu-item-icon-active"
                     : "menu-item-icon-inactive"
-                }`}
+                } ${nav.disabled ? 'opacity-50' : ''}`} // Opacidad para el icono si está deshabilitado
               >
                 {nav.icon}
               </span>
               {(isExpanded || isHovered || isMobileOpen) && (
-                <span className="menu-item-text">{nav.name}</span>
+                <span className={`menu-item-text ${nav.disabled ? 'opacity-50' : ''}`}>{nav.name}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
                 <ChevronDownIcon
@@ -194,33 +324,57 @@ const AppSidebar: React.FC = () => {
                     openSubmenu?.index === index
                       ? "rotate-180 text-brand-500"
                       : ""
-                  }`}
+                  } ${nav.disabled ? 'opacity-50' : ''}`}
                 />
               )}
             </button>
           ) : (
             nav.path && (
-              <Link
-                to={nav.path}
-                className={`menu-item group ${
-                  isActive(nav.path) ? "menu-item-active" : "menu-item-inactive"
-                }`}
-              >
-                <span
-                  className={`menu-item-icon-size ${
-                    isActive(nav.path)
-                      ? "menu-item-icon-active"
-                      : "menu-item-icon-inactive"
+              nav.disabled ? ( // Si el ítem está deshabilitado
+                <div // Renderizar un div en lugar de Link
+                  className={`menu-item group menu-item-inactive opacity-50 cursor-not-allowed ${ // Clases para apariencia deshabilitada
+                    !isExpanded && !isHovered // Mantener clases de layout si es necesario
+                      ? "lg:justify-center"
+                      : "lg:justify-start"
                   }`}
                 >
-                  {nav.icon}
-                </span>
-                {(isExpanded || isHovered || isMobileOpen) && (
-                  <span className="menu-item-text">{nav.name}</span>
-                )}
-              </Link>
+                  <span
+                    className={`menu-item-icon-size menu-item-icon-inactive`} // Usar estilo de icono inactivo o específico para deshabilitado
+                  >
+                    {nav.icon}
+                  </span>
+                  {(isExpanded || isHovered || isMobileOpen) && (
+                    <span className="menu-item-text">{nav.name}</span>
+                  )}
+                </div>
+              ) : ( // Si el ítem está habilitado
+                <Link
+                  to={nav.path}
+                  className={`menu-item group ${
+                    isActive(nav.path) ? "menu-item-active" : "menu-item-inactive"
+                  } ${ // No es necesario añadir clases de disabled aquí si se cambia el tag
+                    !isExpanded && !isHovered
+                      ? "lg:justify-center"
+                      : "lg:justify-start"
+                  }`}
+                >
+                  <span
+                    className={`menu-item-icon-size ${
+                      isActive(nav.path)
+                        ? "menu-item-icon-active"
+                        : "menu-item-icon-inactive"
+                    }`}
+                  >
+                    {nav.icon}
+                  </span>
+                  {(isExpanded || isHovered || isMobileOpen) && (
+                    <span className="menu-item-text">{nav.name}</span>
+                  )}
+                </Link>
+              )
             )
           )}
+          {/* Lógica para subItems deshabilitados */}
           {nav.subItems && (isExpanded || isHovered || isMobileOpen) && (
             <div
               ref={(el) => {
@@ -229,7 +383,7 @@ const AppSidebar: React.FC = () => {
               className="overflow-hidden transition-all duration-300"
               style={{
                 height:
-                  openSubmenu?.type === menuType && openSubmenu?.index === index
+                  openSubmenu?.type === menuType && openSubmenu?.index === index && !nav.disabled // No expandir si el padre está deshabilitado
                     ? `${subMenuHeight[`${menuType}-${index}`]}px`
                     : "0px",
               }}
@@ -237,40 +391,50 @@ const AppSidebar: React.FC = () => {
               <ul className="mt-2 space-y-1 ml-9">
                 {nav.subItems.map((subItem) => (
                   <li key={subItem.name}>
-                    <Link
-                      to={subItem.path}
-                      className={`menu-dropdown-item ${
-                        isActive(subItem.path)
-                          ? "menu-dropdown-item-active"
-                          : "menu-dropdown-item-inactive"
-                      }`}
-                    >
-                      {subItem.name}
-                      <span className="flex items-center gap-1 ml-auto">
-                        {subItem.new && (
-                          <span
-                            className={`ml-auto ${
-                              isActive(subItem.path)
-                                ? "menu-dropdown-badge-active"
-                                : "menu-dropdown-badge-inactive"
-                            } menu-dropdown-badge`}
-                          >
-                            new
-                          </span>
-                        )}
-                        {subItem.pro && (
-                          <span
-                            className={`ml-auto ${
-                              isActive(subItem.path)
-                                ? "menu-dropdown-badge-active"
-                                : "menu-dropdown-badge-inactive"
-                            } menu-dropdown-badge`}
-                          >
-                            pro
-                          </span>
-                        )}
-                      </span>
-                    </Link>
+                    {subItem.disabled ? (
+                       <div // Renderizar div si el subItem está deshabilitado
+                        className={`menu-dropdown-item menu-dropdown-item-inactive opacity-50 cursor-not-allowed`}
+                      >
+                        {subItem.name}
+                        {/* Badges también podrían necesitar estilos de deshabilitado */}
+                      </div>
+                    ) : (
+                      <Link
+                        to={subItem.path}
+                        onClick={(e) => { if (nav.disabled) e.preventDefault(); }} // Prevenir navegación si el padre está deshabilitado
+                        className={`menu-dropdown-item ${
+                          isActive(subItem.path)
+                            ? "menu-dropdown-item-active"
+                            : "menu-dropdown-item-inactive"
+                        } ${nav.disabled ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''}`} // Estilos si el padre está deshabilitado
+                      >
+                        {subItem.name}
+                        <span className="flex items-center gap-1 ml-auto">
+                          {subItem.new && (
+                            <span
+                              className={`ml-auto ${
+                                isActive(subItem.path)
+                                  ? "menu-dropdown-badge-active"
+                                  : "menu-dropdown-badge-inactive"
+                              } menu-dropdown-badge`}
+                            >
+                              new
+                            </span>
+                          )}
+                          {subItem.pro && (
+                            <span
+                              className={`ml-auto ${
+                                isActive(subItem.path)
+                                  ? "menu-dropdown-badge-active"
+                                  : "menu-dropdown-badge-inactive"
+                              } menu-dropdown-badge`}
+                            >
+                              pro
+                            </span>
+                          )}
+                        </span>
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>

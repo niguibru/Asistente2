@@ -82,12 +82,12 @@ const Calendar: React.FC = () => {
         prevEvents.map((event) =>
           event.id === selectedEvent.id
             ? {
-                ...event,
-                title: eventTitle,
-                start: eventStartDate,
-                end: eventEndDate,
-                extendedProps: { calendar: eventLevel },
-              }
+              ...event,
+              title: eventTitle,
+              start: eventStartDate,
+              end: eventEndDate,
+              extendedProps: { calendar: eventLevel },
+            }
             : event
         )
       );
@@ -122,14 +122,14 @@ const Calendar: React.FC = () => {
         description=""
       />
       <div className="rounded-2xl border  border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-      <div
+        {/* <div
           className="absolute inset-0 flex items-center justify-center z-50 bg-gray-10 bg-opacity-30 pointer-events-auto"
           aria-hidden="true" // Para accesibilidad, ya que es decorativo y bloquea
         >
           <span className="text-red-600 text-5xl sm:text-6xl font-bold opacity-75 transform -rotate-21 select-none">
             Work in Progress
           </span>
-        </div>
+        </div> */}
         <div className="custom-calendar">
           <FullCalendar
             ref={calendarRef}
@@ -209,9 +209,8 @@ const Calendar: React.FC = () => {
                             />
                             <span className="flex items-center justify-center w-5 h-5 mr-2 border border-gray-300 rounded-full box dark:border-gray-700">
                               <span
-                                className={`h-2 w-2 rounded-full bg-white ${
-                                  eventLevel === key ? "block" : "hidden"
-                                }`}
+                                className={`h-2 w-2 rounded-full bg-white ${eventLevel === key ? "block" : "hidden"
+                                  }`}
                               ></span>
                             </span>
                           </span>
