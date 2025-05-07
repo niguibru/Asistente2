@@ -473,14 +473,14 @@ const AppSidebar: React.FC = () => {
             <>
               <img
                 className="dark:hidden"
-                src="/images/logo/Zinco-Logo.png"
+                src="/images/logo/Zinco-logo1.svg"
                 alt="Logo"
                 width={180}
                 height={48}
               />
               <img
                 className="hidden dark:block"
-                src="/images/logo/Zinco-Logo.png"
+                src="/images/logo/Zinco-logo1.svg"
                 alt="Logo"
                 width={180}
                 height={48}

@@ -2,11 +2,6 @@
 import InfoCard from './InfoCard'; // Asegúrate de que la ruta sea correcta
 
 // Ejemplo de un icono SVG que podrías pasar como prop
-const CustomUserIcon = ({ className = "w-10 h-10 text-blue-400" }: { className?: string }) => ( // Añadido tipo para props
-  <svg className={className} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path>
-  </svg>
-);
 
 const BellIcon = ({ className = "w-10 h-10 text-blue-500" }: { className?: string }) => ( // Añadido tipo para props
   <svg className={className} fill="currentColor" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
