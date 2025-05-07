@@ -69,14 +69,14 @@ export default function WorkFlows() { // Asumiendo que el nombre del componente 
           title="Onboarding de Cliente"
           description="Seleccione el tipo de cliente y le enviaremos un formulario para que lo rellene. Te avisaremos en cuanto lo haya completado."
           buttonText="Iniciar"
-          onButtonClick={() => handleOpenForm("Onboarding de Cliente")}
+          onButtonClick={() => handleOpenForm("Enviar al Cliente")}
         />
         <InfoCard
           icon={<BellIcon />}
           title="Pedido de Documentos"
           description="Elige el documento que deseas solicitar y se enviará una petición al cliente. Serás notificado en cuanto lo envíe."
-          buttonText="Pedido de Documentos"
-          onButtonClick={() => handleOpenForm("Pedido de Documentos")}
+          buttonText="Inciar"
+          onButtonClick={() => handleOpenForm("Pedir de Documentos")}
         />
         <InfoCard
           icon={<DataExtractIcon />}
@@ -87,10 +87,10 @@ export default function WorkFlows() { // Asumiendo que el nombre del componente 
         />
         <InfoCard
           icon={<MailIcon />}
-          title="Borrador de Email"
+          title="Borrador de Email - WIP"
           description="Crea un borrador de email personalizado, adjunta los archivos necesarios y prepáralo para su envío al cliente."
           buttonText="Iniciar"
-          onButtonClick={() => handleOpenForm("Borrador de Email")}
+          onButtonClick={() => {} } //handleOpenForm("Borrador de Email")}
         />
 
         <FullScreenForm
