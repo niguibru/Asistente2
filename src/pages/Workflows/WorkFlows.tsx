@@ -76,14 +76,14 @@ export default function WorkFlows() { // Asumiendo que el nombre del componente 
           title="Pedido de Documentos"
           description="Elige el documento que deseas solicitar y se enviará una petición al cliente. Serás notificado en cuanto lo envíe."
           buttonText="Inciar"
-          onButtonClick={() => handleOpenForm("Pedir de Documentos")}
+          onButtonClick={() => {} } //handleOpenForm("Borrador de Email")}
         />
         <InfoCard
           icon={<DataExtractIcon />}
           title="Extracción de Datos"
           description="Carga un documento y el sistema identificará y extraerá automáticamente la información más relevante. Recibirás un resumen una vez finalizado el proceso."
           buttonText="Iniciar"
-          onButtonClick={() => handleOpenForm("Extracción de Datos")}
+          onButtonClick={() => {} } //handleOpenForm("Borrador de Email")}
         />
         <InfoCard
           icon={<MailIcon />}
