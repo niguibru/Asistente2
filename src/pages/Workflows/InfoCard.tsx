@@ -30,10 +30,10 @@ const InfoCard: React.FC<InfoCardProps> = ({ icon, title, description, buttonTex
       <p className="text-sm text-gray-600 dark:text-gray-300 mb-6 flex-grow">
         {description}
       </p>
-      <div className="mt-auto flex justify-end">
+      <div className="mt-auto flex justify-end ">
         <button
           onClick={onButtonClick}
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800 transition-colors duration-300"
+          className="px-4 py-2 text-sm font-medium text-white bg-[#847AD5] rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800 transition-colors duration-300"
         >
           {buttonText}
         </button>
