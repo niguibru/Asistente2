@@ -27,7 +27,7 @@ export default function ChatAgent() {
               alt="Avatar del agente virtual"
               className="w-36 h-36 rounded-full mr-4"
             />
-            <p className="text-2xl font-semibold">
+            <p className="!text-2xl font-semibold">
               Hola, soy Zinco Copilot. <br />
               ¿Cómo puedo ayudarte hoy?
             </p>
