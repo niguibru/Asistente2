@@ -1,5 +1,17 @@
 // src/ClientDisplay.tsx
 import React, { useState, useEffect } from 'react';
+import { Bar } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend
+} from 'chart.js';
+
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 // 1. Definimos interfaces para la estructura de los datos
 
@@ -135,9 +147,54 @@ const ClientDisplay: React.FC = () => {
         }
     };
 
+    // Datos mock de ventas
+    const salesData = {
+        labels: [
+            'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+        ],
+        datasets: [
+            {
+                label: 'Ventas ($)',
+                data: [
+                    1200, 1500, 1100, 1800, 2000, 1700,
+                    2100, 1900, 2200, 2500, 2300, 2400
+                ],
+                backgroundColor: '#a084e8',
+                borderRadius: 6,
+                maxBarThickness: 32
+            }
+        ]
+    };
+
+    const salesOptions = {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: false
+            },
+            title: {
+                display: true,
+                text: 'Ventas del último año',
+                color: '#6c47b6',
+                font: { size: 18, weight: 'bold' }
+            }
+        },
+        scales: {
+            x: {
+                grid: { display: false },
+                ticks: { color: '#888' }
+            },
+            y: {
+                grid: { color: '#eee' },
+                ticks: { color: '#888' }
+            }
+        }
+    };
+
     return (
-        <div style={{ fontFamily: 'Arial, sans-serif', padding: '32px 0', background: '#f7f7f9', minHeight: '100vh' }}>
-            <div style={{  margin: '0 auto', background: '#fff', borderRadius: '12px', boxShadow: '0 2px 8px #0001', padding: '32px 32px 24px 32px' }}>
+        <div style={{ fontFamily: 'Arial, sans-serif', minHeight: '100vh' }}>
+            <div style={{ margin: '0 auto', background: '#fff', borderRadius: '12px', boxShadow: '0 2px 8px #0001', padding: '32px 32px 24px 32px' }}>
                 {error && (
                     <div style={{ color: 'red', marginBottom: '15px', border: '1px solid red', padding: '10px' }}>
                         <p><strong>Error:</strong> {error}</p>
@@ -185,51 +242,122 @@ const ClientDisplay: React.FC = () => {
                 )}
 
                 {companyDetails && (
-                    <div style={{ marginTop: '8px' }}>
-                        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '28px', background: '#fff' }}>
-                            <tbody>
-                                <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
-                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px', width: '40%' }}>ID</td>
-                                    <td style={{ padding: '12px 8px' }}>{companyDetails.id}</td>
-                                </tr>
-                                <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
-                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Nombre</td>
-                                    <td style={{ padding: '12px 8px' }}>{companyDetails.name}</td>
-                                </tr>
-                                <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
-                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Categoría</td>
-                                    <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_categoria || 'N/A'}</td>
-                                </tr>
-                                <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
-                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Industria</td>
-                                    <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_industria || 'N/A'}</td>
-                                </tr>
-                                <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
-                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Servicios</td>
-                                    <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_servicios || 'N/A'}</td>
-                                </tr>
-                                <tr>
-                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Necesidades</td>
-                                    <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_necesidades || 'N/A'}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        {companyDetails.documents && companyDetails.documents.length > 0 && (
-                            <div style={{ border: '2px dashed #a084e8', borderRadius: '8px', padding: '18px 18px 8px 18px', marginTop: '8px', background: '#fafaff' }}>
-                                <div style={{ fontWeight: 600, color: '#6c47b6', marginBottom: '10px' }}>Documentos</div>
-                                {companyDetails.documents.map((document, index) => (
-                                    <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: index !== companyDetails.documents.length - 1 ? '1px dotted #d1c4e9' : 'none', padding: '8px 0' }}>
-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                                            <span style={{ color: '#6c47b6', fontWeight: 500 }}>{document.name}</span>
+                    <>
+                        <div style={{ marginTop: '8px' }}>
+                            <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '28px', background: '#fff' }}>
+                                <tbody>
+                                    <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
+                                        <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px', width: '40%' }}>ID</td>
+                                        <td style={{ padding: '12px 8px' }}>{companyDetails.id}</td>
+                                    </tr>
+                                    <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
+                                        <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Nombre</td>
+                                        <td style={{ padding: '12px 8px' }}>{companyDetails.name}</td>
+                                    </tr>
+                                    <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
+                                        <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Categoría</td>
+                                        <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_categoria || 'N/A'}</td>
+                                    </tr>
+                                    <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
+                                        <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Industria</td>
+                                        <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_industria || 'N/A'}</td>
+                                    </tr>
+                                    <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
+                                        <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Servicios</td>
+                                        <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_servicios || 'N/A'}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Necesidades</td>
+                                        <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_necesidades || 'N/A'}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            {companyDetails.documents && companyDetails.documents.length > 0 && (
+                                <div style={{ border: '2px dashed #a084e8', borderRadius: '8px', padding: '18px 18px 8px 18px', marginTop: '8px', background: '#fafaff' }}>
+                                    <div style={{ fontWeight: 600, color: '#6c47b6', marginBottom: '10px' }}>Documentos</div>
+                                    {companyDetails.documents.map((document, index) => (
+                                        <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: index !== companyDetails.documents.length - 1 ? '1px dotted #d1c4e9' : 'none', padding: '8px 0' }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                                <span style={{ color: '#6c47b6', fontWeight: 500 }}>{document.name}</span>
+                                            </div>
+                                            <a href={document.url} target="_blank" rel="noopener noreferrer" style={{ color: '#6c47b6', fontWeight: 600, textDecoration: 'none', border: '1px solid #a084e8', borderRadius: '4px', padding: '4px 14px', transition: 'background 0.2s', background: '#f3eefe' }}>
+                                                Descargar
+                                            </a>
                                         </div>
-                                        <a href={document.url} target="_blank" rel="noopener noreferrer" style={{ color: '#6c47b6', fontWeight: 600, textDecoration: 'none', border: '1px solid #a084e8', borderRadius: '4px', padding: '4px 14px', transition: 'background 0.2s', background: '#f3eefe' }}>
-                                            Descargar
-                                        </a>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                        {/* Card de ventas y ingresos en dos columnas */}
+                        <div style={{ display: 'flex', gap: 32, marginTop: 32 }}>
+                            {/* Columna 1: Ventas */}
+                            <div style={{ flex: 1, height: '300px', background: '#fafaff', borderRadius: 10, boxShadow: '0 1px 4px #0001', padding: 24, border: '1.5px solid #e0e0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <Bar
+                                    data={{
+                                        labels: [
+                                            'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                                            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+                                        ],
+                                        datasets: [
+                                            {
+                                                label: 'Ventas ($)',
+                                                data: [
+                                                    1200, 1500, 1100, 1800, 2000, 1700,
+                                                    2100, 1900, 2200, 2500, 2300, 2400
+                                                ],
+                                                backgroundColor: '#847AD5',
+                                                borderRadius: 6,
+                                                maxBarThickness: 32
+                                            }
+                                        ]
+                                    }}
+                                    options={{
+                                        ...salesOptions,
+                                        plugins: {
+                                            ...salesOptions.plugins,
+                                            title: {
+                                                ...salesOptions.plugins.title,
+                                                text: 'Ventas'
+                                            }
+                                        }
+                                    }}
+                                />
                             </div>
-                        )}
-                    </div>
+                            {/* Columna 2: Ingresos */}
+                            <div style={{ flex: 1, height: '300px', background: '#fafaff', borderRadius: 10, boxShadow: '0 1px 4px #0001', padding: 24, border: '1.5px solid #e0e0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <Bar
+                                    data={{
+                                        labels: [
+                                            'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
+                                            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
+                                        ],
+                                        datasets: [
+                                            {
+                                                label: 'Ingresos ($)',
+                                                data: [
+                                                    800, 1200, 900, 1500, 1700, 1400,
+                                                    1800, 1600, 2000, 2100, 1950, 2050
+                                                ],
+                                                backgroundColor: '#847AD5',
+                                                borderRadius: 6,
+                                                maxBarThickness: 32
+                                            }
+                                        ]
+                                    }}
+                                    options={{
+                                        ...salesOptions,
+                                        plugins: {
+                                            ...salesOptions.plugins,
+                                            title: {
+                                                ...salesOptions.plugins.title,
+                                                text: 'Ingresos'
+                                            }
+                                        }
+                                    }}
+                                />
+                            </div>
+                        </div>
+                    </>
                 )}
 
                 {!loading && clientData.length === 0 && !error && (
