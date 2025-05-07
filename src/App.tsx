@@ -12,6 +12,7 @@ import Buttons from "./pages/UiElements/Buttons";
 import LineChart from "./pages/Charts/LineChart";
 import BarChart from "./pages/Charts/BarChart";
 import Calendar from "./pages/Calendar";
+import ClientDisplay from "./pages/Portfolio/ClientDisplay"
 import BasicTables from "./pages/Tables/BasicTables";
 import FormElements from "./pages/Forms/FormElements";
 import Blank from "./pages/Blank";
@@ -33,6 +34,7 @@ export default function App() {
             {/* Others Page */}
             <Route path="/workflows" element={<WorkFlows />} />
             <Route path="/tasks" element={<Calendar />} />
+            <Route path="/your-portfolio" element={<ClientDisplay />} />
             <Route path="/blank" element={<Blank />} />
 
             {/* Forms */}
