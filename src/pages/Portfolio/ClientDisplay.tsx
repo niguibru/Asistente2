@@ -99,7 +99,7 @@ const ClientDisplay: React.FC = () => {
     }, []); // El array vacío significa que solo se ejecutará al montar el componente
 
     const fetchCompanyDetails = async (companyId: number): Promise<void> => {
-        const url = `http://127.0.0.1:8000/company_data?id=${companyId}`;
+        const url = `https://data-hub-production.up.railway.app/company_data?id=${companyId}`;
         const token = '4321';
         
         setLoadingDetails(true);

@@ -17,12 +17,43 @@ const FullScreenForm: React.FC<FullScreenFormProps> = ({
   formTitle = "Formulario"
 }) => {
   const [formData, setFormData] = useState<{ [key: string]: string }>({});
+  const [clientType, setClientType] = useState<string>('');
+  const [clientData, setClientData] = useState<{ id: number; name: string }[]>([]);
+  const [loadingClients, setLoadingClients] = useState(false);
 
   // Limpia el formulario cuando se cierra o se envía
   useEffect(() => {
     if (!isOpen) {
       setFormData({});
     }
+  }, [isOpen]);
+
+  // 1. Traer clientes
+  const fetchClientData = async (): Promise<void> => {
+    const url = 'https://data-hub-production.up.railway.app/companies_all';
+    const token = '4321';
+    setLoadingClients(true);
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!response.ok) throw new Error(`Error HTTP: ${response.status}`);
+      const data = await response.json() as { id: number; name: string }[];
+      setClientData(data.map(client => ({
+        id: client.id || 0,
+        name: client.name || 'N/A',
+      })));
+    } catch (err) {
+      setClientData([]);
+    } finally {
+      setLoadingClients(false);
+    }
+  };
+
+  // 2. Llamar a fetchClientData cuando el modal se abre
+  useEffect(() => {
+    if (isOpen) fetchClientData();
   }, [isOpen]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -38,6 +69,15 @@ const FullScreenForm: React.FC<FullScreenFormProps> = ({
     // Opcional: podrías dejar el formulario con los datos o limpiarlo aquí también.
     // onClose(); // A menudo se cierra el modal después de enviar. El padre ya lo hace.
   };
+
+  // 2. Opciones de tipo de cliente
+  const clientTypeOptions = [
+    { value: '', label: 'Selecciona tipo de cliente' },
+    { value: 'Persona Física - Nueva Actividad', label: 'Persona Física - Nueva Actividad' },
+    { value: 'Persona Fisica - Actividad en Marcha', label: 'Persona Fisica - Actividad en Marcha' },
+    { value: 'Persona Jurídica - Nueva Actividad', label: 'Persona Jurídica - Nueva Actividad' },
+    { value: 'Persona Jurídica - Actividad en Marcha', label: 'Persona Jurídica - Actividad en Marcha' },
+  ];
 
   return (
     <div
@@ -94,7 +134,7 @@ const FullScreenForm: React.FC<FullScreenFormProps> = ({
         {/* Cuerpo del Modal / Contenido del Formulario */}
         <form onSubmit={handleSubmit} className="p-6 space-y-4 overflow-y-auto flex-grow">
           {/* Campos del formulario (igual que antes) */}
-          <div>
+          {/* <div>
             <label htmlFor="fullName" className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Nombre Completo</label>
             <input
               type="text"
@@ -105,9 +145,9 @@ const FullScreenForm: React.FC<FullScreenFormProps> = ({
               className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               required
             />
-          </div>
+          </div> */}
 
-          <div>
+          {/* <div>
             <label htmlFor="email" className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">Correo Electrónico</label>
             <input
               type="email"
@@ -130,14 +170,70 @@ const FullScreenForm: React.FC<FullScreenFormProps> = ({
               onChange={handleChange}
               className="w-full p-2.5 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
             ></textarea>
+          </div> */}
+
+          <div style={{ marginBottom: '32px', textAlign: 'center' }}>
+            {/* Dropdown de clientes */}
+            <select 
+              onChange={(e) => handleChange(e as any)}
+              value={formData.clientId || ''}
+              name="clientId"
+              style={{
+                width: '100%',
+                padding: '12px',
+                fontSize: '17px',
+                borderRadius: '6px',
+                border: '1px solid #bbb',
+                background: '#fafbfc',
+                boxShadow: '0 1px 2px #0001',
+                marginBottom: 16
+              }}
+              disabled={loadingClients}
+            >
+              <option value="">{loadingClients ? 'Cargando clientes...' : 'Selecciona un cliente'}</option>
+              {clientData.map(client => (
+                <option key={client.id} value={client.id}>{client.name}</option>
+              ))}
+            </select>
+            {/* Dropdown de tipo de cliente */}
+            <select
+              onChange={e => setClientType(e.target.value)}
+              value={clientType}
+              style={{
+                width: '100%',
+                padding: '12px',
+                fontSize: '17px',
+                borderRadius: '6px',
+                border: '1px solid #bbb',
+                background: '#fafbfc',
+                boxShadow: '0 1px 2px #0001'
+              }}
+            >
+              {clientTypeOptions.map(option => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
+            </select>
           </div>
 
           <div className="flex justify-end pt-4">
             <button
               type="submit"
-              className="px-6 py-2.5 text-sm font-medium text-white bg-green-600 rounded-lg hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800"
+              style={{
+                background: '#847AD5',
+                color: 'white',
+                padding: '10px 24px',
+                borderRadius: '8px',
+                fontWeight: 500,
+                fontSize: '16px',
+                boxShadow: '0 1px 2px #0001',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'background 0.2s'
+              }}
+              onMouseOver={e => (e.currentTarget.style.background = '#6c47b6')}
+              onMouseOut={e => (e.currentTarget.style.background = '#847AD5')}
             >
-              ENVIAR
+              Enviar Onboarding
             </button>
           </div>
         </form>
