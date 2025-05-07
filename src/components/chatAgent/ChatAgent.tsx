@@ -1,13 +1,7 @@
-import React, { useState } from 'react';
 import { useEffect } from 'react';
 import '@n8n/chat/style.css';
 import './chatAgent.css'
 import { createChat } from '@n8n/chat';
-
-interface Message {
-  text: string;
-  sender: string;
-}
 
 export default function ChatAgent() {
 
@@ -22,28 +16,6 @@ export default function ChatAgent() {
       ],
 		});
 	}, []);
-
-	//return (<div></div>);
-
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState('');
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInput(event.target.value);
-  };
-
-  const handleSendMessage = () => {
-    if (input.trim() !== '') {
-      // Ahora TypeScript sabe que el nuevo objeto es compatible con el tipo Message[]
-      setMessages([...messages, { text: input, sender: 'user' }]);
-      setInput('');
-      // Aquí iría la lógica para enviar el mensaje al agente virtual
-      // y recibir su respuesta, que luego se añadiría al estado 'messages'
-      // Por ejemplo, si recibes una respuesta:
-      // setMessages(prevMessages => [...prevMessages, { text: "Respuesta del agente", sender: "agent" }]);
-    }
-  };
-
 
 
   return (

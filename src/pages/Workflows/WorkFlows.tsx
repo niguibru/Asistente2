@@ -27,8 +27,8 @@ export default function WorkFlowsCopy() { // Asumiendo que el nombre del compone
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 md:gap-6">
         <InfoCard
           icon={<CustomUserIcon />}
-          title="Gestión de Usuarios"
-          description="Administra fácilmente los perfiles de usuario, permisos y roles dentro de la aplicación."
+          title="Onboarding de Cliente"
+          description="Seleccione el tipo de cliente y le enviaremos un formulario para que lo rellene. Te avisaremos en cuanto lo haya completado."
           buttonText="Ir a Usuarios"
           onButtonClick={() => handleCardClick("Gestión de Usuarios")}
         />
