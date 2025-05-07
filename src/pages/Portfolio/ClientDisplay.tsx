@@ -1,5 +1,5 @@
 // src/ClientDisplay.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 // 1. Definimos interfaces para la estructura de los datos
 
@@ -23,6 +23,7 @@ interface CompanyDetails {
     x_studio_industria: string;
     x_studio_servicios: string;
     x_studio_necesidades: string;
+    documents: Array<{ name: string; url: string }>;
 }
 
 const ClientDisplay: React.FC = () => {
@@ -80,6 +81,11 @@ const ClientDisplay: React.FC = () => {
         }
     };
 
+    // Cargar los datos automáticamente cuando el componente se monta
+    useEffect(() => {
+        fetchClientData();
+    }, []); // El array vacío significa que solo se ejecutará al montar el componente
+
     const fetchCompanyDetails = async (companyId: number): Promise<void> => {
         const url = `http://127.0.0.1:8000/company_data?id=${companyId}`;
         const token = '4321';
@@ -129,78 +135,107 @@ const ClientDisplay: React.FC = () => {
         }
     };
 
-    const formatFieldName = (field: string): string => {
-        return field
-            .replace('x_studio_', '')
-            .split('_')
-            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
-    };
-
     return (
-        <div style={{ fontFamily: 'Arial, sans-serif', padding: '20px', border: '1px solid #eee', borderRadius: '8px', maxWidth: '500px', margin: '20px auto' }}>
-            <h2>Selección de Cliente</h2>
-            <button onClick={fetchClientData} disabled={loading} style={{ padding: '10px 15px', marginBottom: '20px', cursor: 'pointer' }}>
-                {loading ? 'Cargando...' : 'Cargar Clientes'}
-            </button>
+        <div style={{ fontFamily: 'Arial, sans-serif', padding: '32px 0', background: '#f7f7f9', minHeight: '100vh' }}>
+            <div style={{  margin: '0 auto', background: '#fff', borderRadius: '12px', boxShadow: '0 2px 8px #0001', padding: '32px 32px 24px 32px' }}>
+                {error && (
+                    <div style={{ color: 'red', marginBottom: '15px', border: '1px solid red', padding: '10px' }}>
+                        <p><strong>Error:</strong> {error}</p>
+                        <p>Asegúrate de que la API esté funcionando y la URL sea correcta.</p>
+                    </div>
+                )}
 
-            {error && (
-                <div style={{ color: 'red', marginBottom: '15px', border: '1px solid red', padding: '10px' }}>
-                    <p><strong>Error:</strong> {error}</p>
-                    <p>Asegúrate de que la API esté funcionando y la URL sea correcta.</p>
-                </div>
-            )}
+                {clientData.length > 0 && (
+                    <div style={{ marginBottom: '32px', textAlign: 'center' }}>
+                        <select 
+                            onChange={handleClientChange}
+                            value={selectedClient?.id || ''}
+                            style={{
+                                width: '60%',
+                                padding: '12px',
+                                fontSize: '17px',
+                                borderRadius: '6px',
+                                border: '1px solid #bbb',
+                                background: '#fafbfc',
+                                margin: '0 auto',
+                                display: 'block',
+                                boxShadow: '0 1px 2px #0001'
+                            }}
+                        >
+                            <option value="">Selecciona un cliente</option>
+                            {clientData.map(client => (
+                                <option key={client.id} value={client.id}>
+                                    {client.name}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+                )}
 
-            {clientData.length > 0 && (
-                <div style={{ marginBottom: '20px' }}>
-                    <select 
-                        onChange={handleClientChange}
-                        value={selectedClient?.id || ''}
-                        style={{
-                            width: '100%',
-                            padding: '10px',
-                            fontSize: '16px',
-                            borderRadius: '4px',
-                            border: '1px solid #ddd'
-                        }}
-                    >
-                        <option value="">Selecciona un cliente</option>
-                        {clientData.map(client => (
-                            <option key={client.id} value={client.id}>
-                                {client.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            )}
+                {loadingDetails && (
+                    <div style={{ textAlign: 'center', padding: '20px' }}>
+                        Cargando detalles del cliente...
+                    </div>
+                )}
 
-            {loadingDetails && (
-                <div style={{ textAlign: 'center', padding: '20px' }}>
-                    Cargando detalles del cliente...
-                </div>
-            )}
+                {errorDetails && (
+                    <div style={{ color: 'red', marginBottom: '15px', border: '1px solid red', padding: '10px' }}>
+                        <p><strong>Error al cargar detalles:</strong> {errorDetails}</p>
+                    </div>
+                )}
 
-            {errorDetails && (
-                <div style={{ color: 'red', marginBottom: '15px', border: '1px solid red', padding: '10px' }}>
-                    <p><strong>Error al cargar detalles:</strong> {errorDetails}</p>
-                </div>
-            )}
+                {companyDetails && (
+                    <div style={{ marginTop: '8px' }}>
+                        <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '28px', background: '#fff' }}>
+                            <tbody>
+                                <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
+                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px', width: '40%' }}>ID</td>
+                                    <td style={{ padding: '12px 8px' }}>{companyDetails.id}</td>
+                                </tr>
+                                <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
+                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Nombre</td>
+                                    <td style={{ padding: '12px 8px' }}>{companyDetails.name}</td>
+                                </tr>
+                                <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
+                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Categoría</td>
+                                    <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_categoria || 'N/A'}</td>
+                                </tr>
+                                <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
+                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Industria</td>
+                                    <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_industria || 'N/A'}</td>
+                                </tr>
+                                <tr style={{ borderBottom: '1px solid #f0f0f0' }}>
+                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Servicios</td>
+                                    <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_servicios || 'N/A'}</td>
+                                </tr>
+                                <tr>
+                                    <td style={{ color: '#888', fontWeight: 500, padding: '12px 8px' }}>Necesidades</td>
+                                    <td style={{ padding: '12px 8px' }}>{companyDetails.x_studio_necesidades || 'N/A'}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        {companyDetails.documents && companyDetails.documents.length > 0 && (
+                            <div style={{ border: '2px dashed #a084e8', borderRadius: '8px', padding: '18px 18px 8px 18px', marginTop: '8px', background: '#fafaff' }}>
+                                <div style={{ fontWeight: 600, color: '#6c47b6', marginBottom: '10px' }}>Documentos</div>
+                                {companyDetails.documents.map((document, index) => (
+                                    <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: index !== companyDetails.documents.length - 1 ? '1px dotted #d1c4e9' : 'none', padding: '8px 0' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                            <span style={{ color: '#6c47b6', fontWeight: 500 }}>{document.name}</span>
+                                        </div>
+                                        <a href={document.url} target="_blank" rel="noopener noreferrer" style={{ color: '#6c47b6', fontWeight: 600, textDecoration: 'none', border: '1px solid #a084e8', borderRadius: '4px', padding: '4px 14px', transition: 'background 0.2s', background: '#f3eefe' }}>
+                                            Descargar
+                                        </a>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )}
 
-            {companyDetails && (
-                <div style={{ border: '1px solid #ddd', padding: '15px', borderRadius: '4px', backgroundColor: '#f9f9f9' }}>
-                    <h3>Detalles de la Compañía</h3>
-                    <p><strong>ID:</strong> {companyDetails.id}</p>
-                    <p><strong>Nombre:</strong> {companyDetails.name}</p>
-                    <p><strong>Categoría:</strong> {companyDetails.x_studio_categoria || 'N/A'}</p>
-                    <p><strong>Industria:</strong> {companyDetails.x_studio_industria || 'N/A'}</p>
-                    <p><strong>Servicios:</strong> {companyDetails.x_studio_servicios || 'N/A'}</p>
-                    <p><strong>Necesidades:</strong> {companyDetails.x_studio_necesidades || 'N/A'}</p>
-                </div>
-            )}
-
-            {!loading && clientData.length === 0 && !error && (
-                <p>Presiona el botón para cargar la lista de clientes.</p>
-            )}
+                {!loading && clientData.length === 0 && !error && (
+                    <p>Cargando lista de clientes...</p>
+                )}
+            </div>
         </div>
     );
 }
