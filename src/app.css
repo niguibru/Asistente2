@@ -1,0 +1,12 @@
+.menu-item-active {
+    color: white;
+    background: #847AD5;
+}
+
+.menu-item-inactive {
+    color: white;
+}
+
+.menu-item-inactive:hover {
+    background-color: rgba(139, 92, 246, 0.2); /* violeta con 20% de opacidad */
+}
