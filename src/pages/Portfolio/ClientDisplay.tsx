@@ -177,7 +177,7 @@ const ClientDisplay: React.FC = () => {
                 display: true,
                 text: 'Ventas del último año',
                 color: '#6c47b6',
-                font: { size: 18, weight: 'bold' }
+                font: { size: 18, weight: 700 }
             }
         },
         scales: {
@@ -293,24 +293,7 @@ const ClientDisplay: React.FC = () => {
                             {/* Columna 1: Ventas */}
                             <div style={{ flex: 1, height: '300px', background: '#fafaff', borderRadius: 10, boxShadow: '0 1px 4px #0001', padding: 24, border: '1.5px solid #e0e0f0', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <Bar
-                                    data={{
-                                        labels: [
-                                            'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun',
-                                            'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'
-                                        ],
-                                        datasets: [
-                                            {
-                                                label: 'Ventas ($)',
-                                                data: [
-                                                    1200, 1500, 1100, 1800, 2000, 1700,
-                                                    2100, 1900, 2200, 2500, 2300, 2400
-                                                ],
-                                                backgroundColor: '#847AD5',
-                                                borderRadius: 6,
-                                                maxBarThickness: 32
-                                            }
-                                        ]
-                                    }}
+                                    data={salesData}
                                     options={{
                                         ...salesOptions,
                                         plugins: {
