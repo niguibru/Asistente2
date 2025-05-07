@@ -38,7 +38,7 @@ import { ReactComponent as TimeIcon } from "./time.svg?react";
 import { ReactComponent as CopyIcon } from "./copy.svg?react";
 import { ReactComponent as ChevronLeftIcon } from "./chevron-left.svg?react";
 import { ReactComponent as UserCircleIcon } from "./user-circle.svg?react";
-import { ReactComponent as TaskIcon } from "./task-icon.svg?react";
+import { ReactComponent as TaskIcon } from "./tasks_w.svg?react";
 import { ReactComponent as ListIcon } from "./list.svg?react";
 import { ReactComponent as TableIcon } from "./table.svg?react";
 import { ReactComponent as PageIcon } from "./page.svg?react";
@@ -53,11 +53,11 @@ import { ReactComponent as MoreDotIcon } from "./moredot.svg?react";
 import { ReactComponent as AlertHexaIcon } from "./alert-hexa.svg?react";
 import { ReactComponent as ErrorHexaIcon } from "./info-hexa.svg?react";
 import { ReactComponent as BotIcon } from "./bot.svg?react";
-import { ReactComponent as RobotIcon } from "./robot.svg?react";
-import { ReactComponent as WFIcon } from "./diagram-project-solid.svg?react";
-import { ReactComponent as TasksIcon } from "./list-check-solid.svg?react";
-import { ReactComponent as PortfolioIcon } from "./suitcase-solid.svg?react";
 
+import { ReactComponent as RobotIcon } from "./robot_w.svg?react";
+import { ReactComponent as WFIcon } from "./workflow_w.svg?react";
+import { ReactComponent as TasksIcon } from "./tasks_w.svg?react";
+import { ReactComponent as PortfolioIcon } from "./portfolio_w.svg?react";
 
 
 export {
