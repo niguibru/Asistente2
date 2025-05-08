@@ -13,7 +13,7 @@ interface FileUploadProps {
 const FileUpload: React.FC<FileUploadProps> = ({
   onFilesSelected,
   acceptedFileTypes = ".pdf,.doc,.docx,.jpg,.jpeg,.png,.xls,.xlsx,.csv,.txt,.xml",
-  label = "Arrastra y suelta archivos aquí, o haz clic para seleccionar",
+  //label = "Arrastra y suelta archivos aquí, o haz clic para seleccionar",
   maxFiles,
   // initialFiles = [] // Descomentar si se implementa edición
 }) => {
