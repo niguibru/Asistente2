@@ -4,6 +4,15 @@ import ClientSelector from './ClientSelector';
 import StaticOptionsSelector, { SelectOption as StaticSelectOption } from './StaticOptionsSelector';
 import FileUpload from './FileUpload'; // Importar el componente de carga de archivos
 
+export interface DataExtractFormData {
+  clientId: string;
+  clientType: string; // O podría ser 'requestPeriod', 'fiscalYear', etc.
+  uploadedFiles: File[];
+  additionalNotes: string;
+  //selectedDocuments: { [key: string]: boolean };
+  extractionPurpose?: string;
+}
+
 interface DataExtractFormProps {
   isOpen: boolean;
   onClose: () => void;
